@@ -20,7 +20,7 @@ const (
 
 var Db *gorm.DB
 
-func connectDb() {
+func ConnectDb() {
 	//构建连接："用户名:密码@tcp(IP:端口)/数据库?charset=utf8mb4"
 	dsn := strings.Join([]string{userName, ":", passWord, "@tcp(", ip, ":", port, ")/", dbName, "?charset=utf8mb4&parseTime=True"}, "")
 
@@ -44,26 +44,22 @@ func connectDb() {
 	fmt.Println("connect success")
 }
 
-func InitDb(allInit bool) {
-	connectDb()
+func InitDb() {
+	ConnectDb()
 
-	if allInit {
-		// TODO！！！！！！为了方便初始化数据库添加，记得删除
-		Db.Exec("DROP TABLE courses")
-		Db.Exec("DROP TABLE s_courses")
-		Db.Exec("DROP TABLE members")
-	}
+	// 删除原表
+	Db.Exec("DROP TABLE courses")
+	Db.Exec("DROP TABLE s_courses")
+	Db.Exec("DROP TABLE members")
 
-	err := Db.AutoMigrate(&types.Members{}, &types.Courses{}, &types.SCourses{})
-	if err != nil {
+	// 创建新表
+	if err := Db.AutoMigrate(&types.Members{}, &types.Courses{}, &types.SCourses{}); err != nil {
 		return
 	}
 
-	if allInit {
-		// TODO！！！！！！为了方便初始化数据库添加，记得删除
-		Db.Exec(
-			"INSERT INTO members (nickname,username,user_type,password)" +
-				"VALUES ('Admin','JudgeAdmin',1,'JudgePassword2022')",
-		)
-	}
+	// 初始化新表(添加管理员账户)
+	Db.Exec(
+		"INSERT INTO members (nickname,username,user_type,password)" +
+			"VALUES ('Admin','JudgeAdmin',1,'JudgePassword')",
+	)
 }

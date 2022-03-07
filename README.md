@@ -71,3 +71,66 @@
 | course_id  | BIGINT |  FOREIGN KEY courses.course_id   | 课程id |
 | student_id | BIGINT |   FOREIGN KEY members.user_id    | 学生id |
 
+## 初始化
+
+### mysql
+
+#### 创建连接
+
+```go
+const (
+	userName = "root"
+	passWord = "12345678"
+	ip       = "127.0.0.1"
+	port     = "3306"
+	dbName   = "nowUse"
+)
+
+var Db *gorm.DB
+```
+
+```go
+dsn := strings.Join([]string{userName, ":", passWord, "@tcp(", ip, ":", port, ")/", dbName, "?charset=utf8mb4&parseTime=True"}, "")
+
+var err error
+Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+    PrepareStmt: true,
+})
+```
+
+#### 初始化设置
+
+```go
+sqlDb, _ := Db.DB()
+	// 设置空闲连接数
+	sqlDb.SetConnMaxIdleTime(10)
+	// 最大连接数
+	sqlDb.SetMaxOpenConns(100)
+	// 连接复用连接时间
+	sqlDb.SetConnMaxLifetime(time.Hour)
+```
+
+
+
+#### 重建表(可选)
+
+```go
+// 删除原表
+Db.Exec("DROP TABLE courses")
+Db.Exec("DROP TABLE s_courses")
+Db.Exec("DROP TABLE members")
+
+// 创建新表
+if err := Db.AutoMigrate(&types.Members{}, &types.Courses{}, &types.SCourses{}); err != nil {
+    return
+}
+
+// 初始化新表(添加管理员账户)
+Db.Exec(
+    "INSERT INTO members (nickname,username,user_type,password)" +
+    "VALUES ('Admin','JudgeAdmin',1,'JudgePassword')",
+)
+```
+
+
+

@@ -6,7 +6,12 @@ import (
 )
 
 func main() {
-	fmt.Print("hello world")
+	fmt.Print("hello world\n")
+	// TODO Init Database
 
-	database.InitDb(true)
+	// connect table
+	database.ConnectDb()
+
+	// init table
+	// database.InitDb()
 }
