@@ -2,7 +2,10 @@ package main
 
 import (
 	"RobClassSystemByGo/database"
+	"RobClassSystemByGo/router"
 	"fmt"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -14,4 +17,11 @@ func main() {
 
 	// init table
 	// database.InitDb()
+
+	database.InitRedis()
+
+	gin.SetMode(gin.ReleaseMode)
+	g := gin.Default()
+	router.RegisterRouter(g)
+	g.Run(":80")
 }

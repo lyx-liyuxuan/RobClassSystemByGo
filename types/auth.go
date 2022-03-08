@@ -1,5 +1,10 @@
 package types
 
+type LoginRequest struct {
+	Username string `form:"Username" json:"Username" xml:"Username"  binding:"required"`
+	Password string `form:"Password" json:"Password" xml:"Password"  binding:"required"`
+}
+
 // 登录成功后需要 Set-Cookie("camp-session", ${value})
 // 密码错误范围密码错误状态码
 
