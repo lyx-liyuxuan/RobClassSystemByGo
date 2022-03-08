@@ -12,7 +12,7 @@ func RegisterRouter(r *gin.Engine) {
 	// 登录
 	g.POST("/auth/login", auth.Login)
 	// g.POST("/auth/logout", auth.Logout)
-	// g.GET("/auth/whoami", auth.WhoAmI)
+	g.GET("/auth/whoami", auth.WhoAmI)
 
 	// // 成员管理
 	// g.POST("/member/create", controller.Member_create)

@@ -32,7 +32,7 @@ func Login(c *gin.Context) {
 	sessionKey := uuid.NewV4().String()
 
 	ctx := context.Background()
-	datas := map[string]string{
+	datas := map[string]interface{}{
 		"UserID":   member.UserID,
 		"UserType": fmt.Sprint(member.UserType),
 	}
