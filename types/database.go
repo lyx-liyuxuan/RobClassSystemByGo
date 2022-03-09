@@ -27,16 +27,16 @@ type Members struct {
 }
 
 type Course struct {
-	CourseID  string
-	Name      string
-	TeacherID string
+	CourseID   string
+	CourseName string
+	TeacherID  string
 }
 
 type Courses struct {
-	CourseID  string `gorm:"primaryKey;type:bigint UNSIGNED not null AUTO_INCREMENT"`
-	Name      string `gorm:"type:varchar(32) not null"`
-	Cap       int    `gorm:"type:int not null"`
-	TeacherID string `gorm:"type:varchar(32);index"`
+	CourseID   string `gorm:"primaryKey;type:bigint UNSIGNED not null AUTO_INCREMENT"`
+	CourseName string `gorm:"type:varchar(32) not null"`
+	Cap        int    `gorm:"type:int not null"`
+	TeacherID  string `gorm:"type:varchar(32);index"`
 }
 
 type SCourses struct {

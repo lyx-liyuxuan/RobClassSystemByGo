@@ -2,6 +2,8 @@ package router
 
 import (
 	"RobClassSystemByGo/function/auth"
+	"RobClassSystemByGo/function/course"
+	"RobClassSystemByGo/function/member"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,15 +17,14 @@ func RegisterRouter(r *gin.Engine) {
 	g.GET("/auth/whoami", auth.WhoAmI)
 
 	// // 成员管理
-	// g.POST("/member/create", controller.Member_create)
-	// g.GET("/member", controller.Member_get)
-	// g.GET("/member/list", controller.Member_get_list)
-	// g.POST("/member/update", controller.Member_update)
-	// g.POST("/member/delete", controller.Member_delete)
+	g.POST("/member/create", member.Create)
+	g.GET("/member/get", member.Get)
+	g.POST("/member/update", member.Update)
+	g.POST("/member/delete", member.Delete)
 
 	// // 排课
-	// g.POST("/course/create", controller.Course_create)
-	// g.GET("/course/get", controller.Course_get)
+	g.POST("/course/create", course.Create)
+	g.GET("/course/get", course.Get)
 
 	// g.POST("/teacher/bind_course", controller.Teacher_bind_course)
 	// g.POST("/teacher/unbind_course", controller.Teacher_unbind_course)

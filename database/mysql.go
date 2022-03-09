@@ -18,14 +18,14 @@ const (
 	dbName   = "nowUse"
 )
 
-var Db *gorm.DB
+var DB *gorm.DB
 
 func ConnectDb() {
 	//构建连接："用户名:密码@tcp(IP:端口)/数据库?charset=utf8mb4"
 	dsn := strings.Join([]string{userName, ":", passWord, "@tcp(", ip, ":", port, ")/", dbName, "?charset=utf8mb4&parseTime=True"}, "")
 
 	var err error
-	Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		PrepareStmt: true,
 	})
 
@@ -33,7 +33,7 @@ func ConnectDb() {
 		fmt.Println("open database fail")
 		return
 	}
-	sqlDb, _ := Db.DB()
+	sqlDb, _ := DB.DB()
 	// 设置空闲连接数
 	// 数量 connections = ((core_count * 2) + effective_spindle_count)
 	sqlDb.SetConnMaxIdleTime(10)
@@ -48,17 +48,17 @@ func InitDb() {
 	ConnectDb()
 
 	// 删除原表
-	Db.Exec("DROP TABLE courses")
-	Db.Exec("DROP TABLE s_courses")
-	Db.Exec("DROP TABLE members")
+	DB.Exec("DROP TABLE courses")
+	DB.Exec("DROP TABLE s_courses")
+	DB.Exec("DROP TABLE members")
 
 	// 创建新表
-	if err := Db.AutoMigrate(&types.Members{}, &types.Courses{}, &types.SCourses{}); err != nil {
+	if err := DB.AutoMigrate(&types.Members{}, &types.Courses{}, &types.SCourses{}); err != nil {
 		return
 	}
 
 	// 初始化新表(添加管理员账户)
-	Db.Exec(
+	DB.Exec(
 		"INSERT INTO members (nickname,username,user_type,password)" +
 			"VALUES ('Admin','JudgeAdmin',1,'JudgePassword')",
 	)

@@ -16,36 +16,39 @@ func Login(c *gin.Context) {
 	// get request
 	var request types.LoginRequest
 	if err := c.ShouldBind(&request); err != nil {
-		c.JSON(200, types.LoginResponse{Code: types.ParamInvalid})
+		log.Println(err)
 		return
 	}
 
-	// get member
-	var member types.Member
-	database.Db.Model(&types.Member{}).Where(&request).Find(&member)
-	if member == (types.Member{}) {
-		c.JSON(200, types.LoginResponse{Code: types.WrongPassword})
+	// get line
+	var line types.Members
+	database.DB.Model(&types.Member{}).Where(&request).Find(&line)
+	if line == (types.Members{}) {
+		c.JSON(200, types.LoginResponse{
+			Code: types.WrongPassword,
+		})
 		return
 	}
 
-	// get uuid And Write Cookie
+	// 获取唯一标识符 uuid 作为该数据行的键
 	sessionKey := uuid.NewV4().String()
 
 	ctx := context.Background()
-	datas := map[string]interface{}{
-		"UserID":   member.UserID,
-		"UserType": fmt.Sprint(member.UserType),
+	data := map[string]interface{}{
+		"UserID":   line.UserID,
+		"UserType": fmt.Sprint(line.UserType),
 	}
-	log.Println(datas)
-	if err := database.Rdb.HMSet(ctx, sessionKey, datas).Err(); err != nil {
+	//log.Println(data)
+	if err := database.RDB.HMSet(ctx, sessionKey, data).Err(); err != nil {
 		log.Fatal(err)
+		return
 	}
 	c.SetCookie("camp-session", sessionKey, 3600, "/", "", false, true)
 
 	response := types.LoginResponse{
 		Code: types.OK,
 		Data: struct{ UserID string }{
-			UserID: member.UserID,
+			UserID: line.UserID,
 		},
 	}
 
