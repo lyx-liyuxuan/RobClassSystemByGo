@@ -10,18 +10,23 @@ import (
 
 func main() {
 	fmt.Print("hello world\n")
-	// TODO Init Database
 
-	// connect table
-	database.ConnectDb()
-
-	// init table
-	// database.InitDb()
+	// TODO 判断是否需要重置数据库
+	// 仅连接数据库
+	//database.ConnectDb()
+	// 重置数据库并连接
+	database.InitDb()
 
 	database.InitRedis()
 
 	gin.SetMode(gin.ReleaseMode)
 	g := gin.Default()
 	router.RegisterRouter(g)
-	g.Run(":80")
+	err := g.Run(":80")
+	if err != nil {
+		return
+	}
 }
+
+// TODO Mysql优化
+// TODO Redis优化

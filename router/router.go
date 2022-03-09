@@ -2,6 +2,7 @@ package router
 
 import (
 	"RobClassSystemByGo/function/auth"
+	"RobClassSystemByGo/function/book"
 	"RobClassSystemByGo/function/course"
 	"RobClassSystemByGo/function/member"
 
@@ -32,7 +33,7 @@ func RegisterRouter(r *gin.Engine) {
 	// g.POST("/course/schedule", controller.Course_schedule)
 
 	// // 抢课
-	// g.POST("/student/book_course", controller.Student_book_course)
+	g.POST("/book/book", book.Book)
 	// g.GET("/student/course", controller.Student_course)
 
 }

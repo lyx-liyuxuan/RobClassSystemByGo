@@ -29,17 +29,18 @@ type GetMemberResponse struct {
 
 // 批量获取成员信息
 
-type GetMemberListRequest struct {
-	Offset int
-	Limit  int
-}
-
-type GetMemberListResponse struct {
-	Code ErrNo
-	Data struct {
-		MemberList []Member
-	}
-}
+// TODO 批量获取成员信息
+//type GetMemberListRequest struct {
+//	Offset int
+//	Limit  int
+//}
+//
+//type GetMemberListResponse struct {
+//	Code ErrNo
+//	Data struct {
+//		MemberList []Member
+//	}
+//}
 
 // 更新成员信息
 

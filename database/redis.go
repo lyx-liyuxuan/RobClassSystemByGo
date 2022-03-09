@@ -36,30 +36,7 @@ func InitRedis() {
 	}
 	fmt.Println("delete redis:", res)
 
-	// // 读取学生选课和课程列表，构建缓存
-	// course_cnt := make(map[string]int)
-	// var courses []struct {
-	// 	CourseID string
-	// 	Cap      int
-	// }
-	// DB .Table("courses").Find(&courses)
-	// for i := range courses {
-	// 	course_cnt[courses[i].CourseID] = courses[i].Cap
-	// }
-
-	// var data []types.SCourses
-	// DB .Table("s_courses").Find(&data)
-	// for i := range data {
-	// 	course_cnt[data[i].CourseID] -= 1
-	// 	err := RDB.HSetNX(ctx, data[i].StudentID, data[i].CourseID, 0).Err()
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-	// }
-
-	// for k, v := range course_cnt {
-	// 	RDB.Set(ctx, k+"cnt", v, 0)
-	// }
+	// TODO 从数据库中提取剩余 Cap
 
 	fmt.Println("open redis success")
 }

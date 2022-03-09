@@ -9,6 +9,7 @@ import (
 )
 
 func Create(c *gin.Context) {
+	// 权限检验
 	if !CheckPermissions(c) {
 		c.JSON(200, types.CreateMemberResponse{
 			Code: types.PermDenied,
@@ -17,11 +18,15 @@ func Create(c *gin.Context) {
 	}
 
 	var request types.CreateMemberRequest
-	if err := c.ShouldBind(request); err != nil {
+	if err := c.ShouldBind(&request); err != nil {
 		log.Println(err)
+		c.JSON(200, types.CreateMemberResponse{
+			Code: types.UnknownError,
+		})
 		return
 	}
 
+	// 参数检验
 	if !CheckParameter(request) {
 		c.JSON(200, types.CreateMemberResponse{
 			Code: types.ParamInvalid,
@@ -29,6 +34,7 @@ func Create(c *gin.Context) {
 		return
 	}
 
+	// 完全查找数据行（包括删除) 比判断数据状态
 	var line types.Members
 	database.DB.Model(types.Members{}).Unscoped().Where("username = ?", request.Username).Find(&line)
 	var response types.CreateMemberResponse
@@ -39,7 +45,7 @@ func Create(c *gin.Context) {
 			response.Code = types.UserHasExisted
 		}
 	} else {
-		database.DB.Model(types.Members{}).Create(&request)
+		database.DB.Table("members").Create(&request)
 		var member types.Member
 		database.DB.Model(types.Members{}).Where("username=?", request.Username).Find(&member)
 		response.Code = types.OK

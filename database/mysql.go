@@ -60,6 +60,6 @@ func InitDb() {
 	// 初始化新表(添加管理员账户)
 	DB.Exec(
 		"INSERT INTO members (nickname,username,user_type,password)" +
-			"VALUES ('Admin','JudgeAdmin',1,'JudgePassword')",
+			"VALUES ('Admin','test1',1,'test')",
 	)
 }

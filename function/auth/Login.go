@@ -13,14 +13,14 @@ import (
 
 func Login(c *gin.Context) {
 
-	// get request
+	// 获取请求
 	var request types.LoginRequest
 	if err := c.ShouldBind(&request); err != nil {
 		log.Println(err)
 		return
 	}
 
-	// get line
+	// 获取数据行
 	var line types.Members
 	database.DB.Model(&types.Member{}).Where(&request).Find(&line)
 	if line == (types.Members{}) {
@@ -33,16 +33,19 @@ func Login(c *gin.Context) {
 	// 获取唯一标识符 uuid 作为该数据行的键
 	sessionKey := uuid.NewV4().String()
 
+	// redis 记录 sessionKey 对应的 UserID， UserType
 	ctx := context.Background()
-	data := map[string]interface{}{
+	// TODO 优化 UserType 写法
+	data := map[string]string{
 		"UserID":   line.UserID,
 		"UserType": fmt.Sprint(line.UserType),
 	}
-	//log.Println(data)
 	if err := database.RDB.HMSet(ctx, sessionKey, data).Err(); err != nil {
 		log.Fatal(err)
 		return
 	}
+
+	// 设置 cookie
 	c.SetCookie("camp-session", sessionKey, 3600, "/", "", false, true)
 
 	response := types.LoginResponse{

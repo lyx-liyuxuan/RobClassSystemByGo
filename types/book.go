@@ -11,13 +11,14 @@ type BookCourseResponse struct {
 	Code ErrNo
 }
 
-type GetStudentCourseRequest struct {
-	StudentID string
-}
-
-type GetStudentCourseResponse struct {
-	Code ErrNo
-	Data struct {
-		CourseList []Course
-	}
-}
+// TODO 添加异步检测，直到完成写入再读取
+//type GetStudentCourseRequest struct {
+//	StudentID string
+//}
+//
+//type GetStudentCourseResponse struct {
+//	Code ErrNo
+//	Data struct {
+//		CourseList []Course
+//	}
+//}
