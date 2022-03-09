@@ -9,8 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// CheckPermission
-// 权限校验
+// CheckPermissions 权限校验
 // 管理员 -> true
 // 其余 -> false
 func CheckPermissions(c *gin.Context) bool {
@@ -29,7 +28,7 @@ func CheckPermissions(c *gin.Context) bool {
 
 }
 
-// TODO 参数校验
 func CheckParameter(request types.CreateMemberRequest) bool {
+	// TODO 参数校验
 	return true
 }

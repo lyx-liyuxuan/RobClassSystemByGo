@@ -10,7 +10,7 @@ import (
 var RDB *redis.Client
 
 func InitRedis() {
-	// 连接 Reids
+	// 连接 Redis
 	RDB = redis.NewClient(&redis.Options{
 		Addr:     "127.0.0.1:6379",
 		Password: "",  // no password set

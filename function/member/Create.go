@@ -51,5 +51,6 @@ func Create(c *gin.Context) {
 		response.Code = types.OK
 		response.Data = struct{ UserID string }{UserID: member.UserID}
 	}
+
 	c.JSON(200, response)
 }

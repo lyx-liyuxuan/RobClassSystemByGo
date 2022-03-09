@@ -19,6 +19,7 @@ func Logout(c *gin.Context) {
 	ctx := context.Background()
 	database.RDB.Del(ctx, sessionKey)
 	c.SetCookie("camp-session", sessionKey, -1, "/", "", false, true)
+
 	c.JSON(200, types.LogoutResponse{
 		Code: types.OK,
 	})

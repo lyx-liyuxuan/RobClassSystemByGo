@@ -9,6 +9,7 @@ import (
 )
 
 func Update(c *gin.Context) {
+
 	var request types.UpdateMemberRequest
 	if err := c.ShouldBind(&request); err != nil {
 		log.Println(err)
@@ -26,5 +27,6 @@ func Update(c *gin.Context) {
 		database.DB.Model(types.Members{}).Where("user_id=?", request.UserID).Update("Nickname", request.Nickname)
 		response.Code = types.OK
 	}
+
 	c.JSON(200, response)
 }

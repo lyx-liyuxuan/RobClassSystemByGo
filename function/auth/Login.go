@@ -12,7 +12,6 @@ import (
 )
 
 func Login(c *gin.Context) {
-
 	// 获取请求
 	var request types.LoginRequest
 	if err := c.ShouldBind(&request); err != nil {

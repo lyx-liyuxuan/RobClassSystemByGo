@@ -25,6 +25,7 @@ func WhoAmI(c *gin.Context) {
 	// 从数据库中提出数据
 	var member types.Member
 	database.DB.Table("members").Where("user_id = ?", userID).Find(&member)
+
 	c.JSON(200, types.WhoAmIResponse{
 		Code: types.OK,
 		Data: member,

@@ -19,6 +19,7 @@ func Delete(c *gin.Context) {
 
 	var line types.Members
 	var response types.DeleteMemberResponse
+
 	database.DB.Model(types.Members{}).Unscoped().Where("user_id = ?", request.UserID).Find(&line)
 	if line == (types.Members{}) {
 		response.Code = types.UserNotExisted
@@ -28,5 +29,6 @@ func Delete(c *gin.Context) {
 		database.DB.Model(types.Members{}).Where("user_id=?", request.UserID).Delete(&types.Members{})
 		response.Code = types.OK
 	}
+
 	c.JSON(200, response)
 }

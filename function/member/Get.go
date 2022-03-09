@@ -9,6 +9,7 @@ import (
 )
 
 func Get(c *gin.Context) {
+
 	var request types.GetMemberRequest
 	if err := c.ShouldBind(&request); err != nil {
 		log.Println(err)
@@ -18,6 +19,7 @@ func Get(c *gin.Context) {
 	var line types.Members
 	var response types.GetMemberResponse
 	database.DB.Model(types.Members{}).Unscoped().Where(&request).Find(&line)
+
 	if line == (types.Members{}) {
 		response.Code = types.UserNotExisted
 	} else if line.Deleted.Valid {
@@ -31,5 +33,6 @@ func Get(c *gin.Context) {
 			UserType: line.UserType,
 		}
 	}
+
 	c.JSON(200, response)
 }

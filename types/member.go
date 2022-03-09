@@ -27,23 +27,6 @@ type GetMemberResponse struct {
 	Data Member
 }
 
-// 批量获取成员信息
-
-// TODO 批量获取成员信息
-//type GetMemberListRequest struct {
-//	Offset int
-//	Limit  int
-//}
-//
-//type GetMemberListResponse struct {
-//	Code ErrNo
-//	Data struct {
-//		MemberList []Member
-//	}
-//}
-
-// 更新成员信息
-
 type UpdateMemberRequest struct {
 	UserID   string `form:"UserID" json:"UserID" xml:"UserID"  binding:"required"`
 	Nickname string `form:"Nickname" json:"Nickname" xml:"Nickname"  binding:"required"`

@@ -3,12 +3,7 @@ package types
 import "gorm.io/gorm"
 
 /// 系统内置管理员账号
-// 账号名：JudgeAdmin 密码：JudgePassword2022
-
-// 创建成员
-// 参数不合法返回 ParamInvalid
-
-// 只有管理员才能添加
+// 账号名：test1 密码：test
 
 type Member struct {
 	UserID   string

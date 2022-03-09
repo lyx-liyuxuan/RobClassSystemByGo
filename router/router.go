@@ -27,13 +27,7 @@ func RegisterRouter(r *gin.Engine) {
 	g.POST("/course/create", course.Create)
 	g.GET("/course/get", course.Get)
 
-	// g.POST("/teacher/bind_course", controller.Teacher_bind_course)
-	// g.POST("/teacher/unbind_course", controller.Teacher_unbind_course)
-	// g.GET("/teacher/get_course", controller.Teacher_get_course)
-	// g.POST("/course/schedule", controller.Course_schedule)
-
 	// // 抢课
 	g.POST("/book/book", book.Book)
-	// g.GET("/student/course", controller.Student_course)
 
 }

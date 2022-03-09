@@ -47,6 +47,7 @@ func ConnectDb() {
 func InitDb() {
 	ConnectDb()
 
+	// TODO 优化写法
 	// 删除原表
 	DB.Exec("DROP TABLE courses")
 	DB.Exec("DROP TABLE s_courses")

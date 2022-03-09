@@ -9,8 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// TODO 判断课程存在与否
 func Create(c *gin.Context) {
+	// TODO 判断课程存在与否
 	var request types.CreateCourseRequest
 	if err := c.ShouldBind(&request); err != nil {
 		log.Println(err)

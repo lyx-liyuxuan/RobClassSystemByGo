@@ -13,7 +13,6 @@ import (
 
 func Book(c *gin.Context) {
 	// TODO 压测
-
 	// 获取请求
 	var request types.BookCourseRequest
 	if err := c.ShouldBind(&request); err != nil {
