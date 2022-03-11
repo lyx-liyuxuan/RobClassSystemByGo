@@ -30,5 +30,9 @@ func CheckPermissions(c *gin.Context) bool {
 
 func CheckParameter(request types.CreateMemberRequest) bool {
 	// TODO 参数校验
+
+	if request == (types.CreateMemberRequest{}) {
+		return false
+	}
 	return true
 }

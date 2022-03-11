@@ -27,9 +27,3 @@ func main() {
 		return
 	}
 }
-
-// TODO 功能完善
-// TODO 压测
-// TODO 并发优化
-// TODO Mysql优化
-// TODO Redis优化
